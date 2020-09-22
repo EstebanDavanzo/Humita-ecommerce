@@ -1,0 +1,20 @@
+[
+	{ 
+		"id":1,
+		"name":"Cuello",
+		"img":"img1",
+		"description":"Cuello hecho de.."
+	}, 
+	{ 
+		"id":2,
+		"name":"Bufandon",
+		"img":"img2",
+		"description":"Bufandon hecho de.."
+	},
+	{ 
+		"id":3,
+		"name":"Bufanda",
+		"img":"img3",
+		"description":"Bufanda hecha de.."
+	}
+]
