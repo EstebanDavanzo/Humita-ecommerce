@@ -37,8 +37,10 @@ function ProductDetail(){
         const position = itemCart.findIndex(i => i.item.id==id)
 
         if(position>=0){
-            itemCart[position].cantidad+=cantItems
-            setItemCart(itemCart)
+            /* itemCart[position].cantidad+=cantItems */
+            const aux = [...itemCart]
+            aux[position].cantidad+=cantItems
+            setItemCart(aux)
         }else{
             const newItem = {item:{id:id,title:product.title,price:product.price},cantidad:cantItems}
             const aux = [...itemCart, newItem]
@@ -50,7 +52,6 @@ function ProductDetail(){
     function buy(cantItems){
         console.log('Comprar: ' + cantItems + ' articulos');
     }
-
 
     return(
         <div className="container">           
