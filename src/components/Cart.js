@@ -65,6 +65,7 @@ function Cart(){
         if (position > -1) {
             itemCart.splice(position, 1);
         }
+        
         console.log('elimine!')
         console.log('itemcart:', itemCart)
         const aux = [...itemCart]
