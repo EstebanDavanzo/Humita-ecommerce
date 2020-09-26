@@ -1,9 +1,10 @@
 import React, {useEffect, useState } from 'react';
 import ProductList from './ProductList';
 
-import img1 from '../imagenes/item1/cuello.jpg' 
-import img2 from '../imagenes/item2/bufandon.jpg'
-import img3 from '../imagenes/item2/bufandon2.jpg'
+import img1 from '../imagenes/slide/slide1.jpg'
+import img2 from '../imagenes/slide/slide2.jpg' 
+/* import img2 from '../imagenes/item1/Cuello_cielo2.jpg' */ 
+import img3 from '../imagenes/slide/slide3.jpg'
 
 import {getFirestore}  from '../firebase/index'
  
@@ -64,22 +65,22 @@ function ProductContainer(){
 
     return(
         <>
-            <div id="carouselExampleControls" className="text-center carousel slide" data-ride="carousel">
+            <div id="carouselExampleControls" className=" text-center carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        {/* <img src={img1} className="w-100" alt="..."/> */}
-                        <ProductList title="SALE" products={saleProducts}/>
-                        { loading && <p>Loading...</p>} 
+                        <img src={img1} className="slade" alt="..."/>
+                        {/* <ProductList title="SALE" products={saleProducts}/>
+                        { loading && <p>Loading...</p>} */} 
                     </div>
                     <div className="carousel-item">
-                        <ProductList title="SUMMER" products={summerProducts}/>
-                        { loading && <p>Loading...</p>}
-                        {/* <img src={img2} className="w-100" alt="..."/> */}
+                        {/* <ProductList title="SUMMER" products={summerProducts}/>
+                        { loading && <p>Loading...</p>} */}
+                        <img src={img2} className="slade" alt="..."/>
                     </div>
                     <div className="carousel-item">
-                        <ProductList title="WINTER" products={winterProducts}/>
-                        { loading && <p>Loading...</p>}
-                        {/* <img src={img3} className="w-100" alt="..."/> */}
+                        {/* <ProductList title="WINTER" products={winterProducts}/>
+                        { loading && <p>Loading...</p>} */}
+                        <img src={img3} className="slade" alt="..."/>
                     </div>
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

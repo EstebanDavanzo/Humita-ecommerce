@@ -4,7 +4,7 @@ import Sale from '../components/Sale';
 
 function Home(){   
     return(
-        <main className="">
+        <main>
           <Sale/>
         </main>
     );

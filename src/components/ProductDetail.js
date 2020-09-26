@@ -6,9 +6,6 @@ import ItemCount from './ItemCount.js'
 import {cartContext} from './CartContext.js'
 /* import {useCartContext} from './CartContext.js' */
 
-/* import data from '../data.json' */
-import img1 from '../imagenes/item1/cuello.jpg'
-
 
 function ProductDetail(){
     const {id} = useParams()
@@ -19,7 +16,7 @@ function ProductDetail(){
     /* const {itemCart, setItemCart} = useCartContext(); */
 
     const [product, setProduct] = useState([]);
-
+   
     useEffect(() => {
         const db = getFirestore(); 
         
@@ -56,11 +53,11 @@ function ProductDetail(){
 
 
     return(
-        <>           
+        <div className="container">           
             <div className="row align-items-start justify-content-around mt-3"> 
                 <div className="col-lg-9 text-center"> 
                     <h2 className="text-center mt-3">{product.title}</h2>  
-                    <img className="w-75" src={img1} alt="" />
+                    <img className="w-75" src={`/imagenes/${product.imageId}`} alt="" />
                     <p className="w-100 mt-1">{product.detalle}</p>
                 </div>
                 <div className="col-lg-3 text-center mt-lg-5">
@@ -72,7 +69,7 @@ function ProductDetail(){
                     <button onClick={()=>buy(cantItems)} type="button" className="w-100 mb-2 btn btn-primary" >Comprar {cantItems}</button> 
                 </div>     
             </div>
-        </>      
+        </div>      
     );
 }
 

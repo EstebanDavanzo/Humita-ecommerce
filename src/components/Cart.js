@@ -12,7 +12,7 @@ import { cartContext } from './CartContext.js'
 
 function Componente1(){
     return<>
-        <div className="col-md my-5 align-items-center text-center justify-content-around">
+        <div className=" container col-md my-5 align-items-center text-center justify-content-around">
             <h2>NO HAY ELEMENTOS EN EL CARRITO </h2>
             <Link to={'/'}>
                 <button className="btn btn-primary w-50 btn-lg mt-3" type='button'> Ir a comprar </button>
@@ -109,7 +109,7 @@ function Cart(){
     return(
 
         itemCart.length==0 ?  <Componente1/> : 
-        <> 
+        <div className="container"> 
             <h2 className="mt-3 text-center">Finalizar Compra</h2>
 
             <div className="row align-items-start justify-content-around">
@@ -166,7 +166,7 @@ function Cart(){
                     </form>
                 </div>
             </div>          
-        </>
+        </div>
     )
 }
 

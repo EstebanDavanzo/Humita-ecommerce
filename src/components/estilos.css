@@ -37,6 +37,12 @@ nav{
     height: 80vh;
 }
 
+.slade{
+    height:80vh;
+    width:100%;
+    
+}
+
 
 .btn-ham{
     border-color:#A4217D !important;

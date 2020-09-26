@@ -32,7 +32,7 @@ function App() {
 
         <Header btnFb={btnFb} btnInsta={btnInsta}/> 
         <div className="contenedor overflow-auto">
-          <div className="container">
+          {/* <div className="container"> */}
             <Switch>
               <Route exact path="/">
                 <Home/>
@@ -57,7 +57,7 @@ function App() {
               </Route>             
             </Switch>
             <Footer btnFb={btnFb} btnInsta={btnInsta}/>
-          </div>
+          {/* </div> */}
         </div> 
 
       </cartContext.Provider>

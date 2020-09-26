@@ -36,7 +36,7 @@ function ProductContainer(){
     }, [category]);
 
     return(
-        <section className="">
+        <section className="container">
             <ProductList title={title} products={products}/>
             { loading && <p>Loading...</p>} 
         </section>
