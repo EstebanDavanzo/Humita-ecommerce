@@ -23,24 +23,55 @@ function Componente1(){
 
 
 function Cart(){
-    const {itemCart} = useContext(cartContext)
+    const {itemCart, setItemCart} = useContext(cartContext)
 
     const [buyer, setBuyer] = useState({});
 
     function onInputName(evt){
-        buyer.name=evt.target.value
-        setBuyer(buyer)
+        const aux={...buyer}
+        aux.name=evt.target.value
+        //Agregar valicaciones
+        setBuyer(aux)
     }
 
     function onInputMail(evt){
-        buyer.email=evt.target.value
-        setBuyer(buyer)
+        const aux={...buyer}
+        aux.email=evt.target.value
+        //Agregar valicaciones
+        setBuyer(aux)
     }
 
     function onInputPhone(evt){
-        buyer.phone=evt.target.value
-        setBuyer(buyer)
+        //buyer.phone=evt.target.value
+        const aux={...buyer}
+        aux.phone=evt.target.value
+        //Agregar valicaciones
+        setBuyer(aux)
     }
+
+    const [check, setCheck] = useState();
+    function despachar(check){
+        setCheck(true)
+    }
+
+
+    function remove(itm){
+        //Remover un elemento de la lista
+        const position = itemCart.findIndex(i => i.item.id==itm.item.id)
+        console.log('position: ',position)
+        console.log('itemcart:', itemCart)
+        console.log('prop',itm)
+
+        if (position > -1) {
+            itemCart.splice(position, 1);
+        }
+        console.log('elimine!')
+        console.log('itemcart:', itemCart)
+        const aux = [...itemCart]
+        setItemCart(aux)
+        
+    }
+
  
     const [orderId, setOrderId] = useState();
     const [loading, setLoading] = useState(true);
@@ -87,15 +118,17 @@ function Cart(){
             total:itemCart.reduce((prev,next)=>prev + next.cantidad*next.item.price,0),
             date:firebase.firestore.Timestamp.fromDate(new Date())
         }
+
+        console.log('order',order)
         
        //pushear la orden con promise
-        orders.add(order).then( ({id}) => {
+        /* orders.add(order).then( ({id}) => {
             setOrderId(id);
         }).catch(err => {
             setError(err)
         }).finally(()=>{
             setLoading(false)
-        })
+        }) */
 
         //pushear la orden con await y catch
         /* try{
@@ -119,7 +152,7 @@ function Cart(){
                             <td className="text-center">{i.item.title}</td>
                             <td className="text-center">${i.item.price} c/u</td>
                             <td className="text-center">{i.cantidad} unidades</td>
-                            <td className="text-right"><button type="button" className="btn btn-primary w-50">Quitar</button></td>
+                            <td className="text-right"><button type="button" className="btn btn-primary w-50" onClick={()=>remove(i)}>Quitar</button></td>
                         </tr>)}
                     </tbody>
                 </table>
@@ -129,43 +162,47 @@ function Cart(){
             </div>
             <div className="row mb-3 align-items-start justify-content-around">
                 <div className="col-7 text-center">
-                    <button type="button" className=" btn btn-primary">Despachar</button>
+                    <button disabled={check===true} type="button" className=" btn btn-primary" onClick={despachar}>Despachar</button>
                 </div>         
             </div>
 
-
-            <div className="row align-items-start justify-content-around">
-                <div className="col-lg-5">              
-                    <form className="form-horizontal" method="">
-                        <fieldset>
-                            <div className="form-group form-row">
-                                <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-user bigicon"></i></span>
-                                <div className="col-lg-10">
-                                    <input id="fname" name="name" onInput={onInputName} type="text" placeholder="Nombre y Apellido" className="form-control" required />
+            {check ?<>
+                <div className="row align-items-start justify-content-around">
+                    <div className="col-lg-5">              
+                        <form className="form-horizontal" method="">
+                            <fieldset>
+                                <div className="form-group form-row">
+                                    <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-user bigicon"></i></span>
+                                    <div className="col-lg-10">
+                                        <input id="fname" name="name" onInput={onInputName} type="text" placeholder="Nombre y Apellido" className="form-control" required />
+                                    </div>
                                 </div>
-                            </div>
-                    
-                            <div className="form-group form-row">
-                                <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-envelope-o bigicon"></i></span>
-                                <div className="col-lg-10">
-                                    <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>
-                                </div>
-                            </div>
-                            <div className="form-group form-row">
-                                <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-phone-square bigicon"></i></span>
-                                <div className="col-lg-10">
-                                    <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>
-                                </div>
-                            </div>
                         
-                            <div className="col-lg-11 col-12 ml-lg-3 ml-0">
-                                <button onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg">Finalizar</button>
-                            </div>
+                                <div className="form-group form-row">
+                                    <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-envelope-o bigicon"></i></span>
+                                    <div className="col-lg-10">
+                                        <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>
+                                    </div>
+                                </div>
+                                <div className="form-group form-row">
+                                    <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-phone-square bigicon"></i></span>
+                                    <div className="col-lg-10">
+                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>
+                                    </div>
+                                </div>
                             
-                        </fieldset>
-                    </form>
-                </div>
-            </div>          
+                                <div className="col-lg-11 col-12 ml-lg-3 ml-0">
+                                    <button disabled={ !buyer.email || !buyer.name || !buyer.phone} onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg">Finalizar</button>
+                                </div>
+                                
+                            </fieldset>
+                        </form>
+                    </div>
+                </div> 
+            </> : <>
+            </>} 
+
+                     
         </div>
     )
 }
