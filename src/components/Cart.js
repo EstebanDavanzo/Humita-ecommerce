@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useParams , Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import {getFirestore}  from '../firebase/index'
 import * as firebase from 'firebase/app';
@@ -24,29 +24,83 @@ function Componente1(){
 
 function Cart(){
     const {itemCart, setItemCart} = useContext(cartContext)
-
     const [buyer, setBuyer] = useState({});
-
+    const [err, setErr] = useState("");
+//----------------------------------
+//   VALIDACIONES DE LOS INPUTS 
+//---------------------------------- 
     function onInputName(evt){
         const aux={...buyer}
-        aux.name=evt.target.value
-        //Agregar valicaciones
-        setBuyer(aux)
+        const nameRegex2=/^[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]{3,}$/
+        const nameRegex=/^[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+(?:\s+[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+)+$/ 
+        if(evt.target.value.match(nameRegex) || evt.target.value.trim().match(nameRegex2)) {    
+            aux.name=evt.target.value
+            setBuyer(aux)
+            setErr("") 
+         }    
+         else {   
+             setErr("Nombre inválido")
+             aux.name=""
+             setBuyer(aux)   
+         } 
     }
 
     function onInputMail(evt){
         const aux={...buyer}
-        aux.email=evt.target.value
-        //Agregar valicaciones
-        setBuyer(aux)
+       
+        const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
+
+        if(evt.target.name==="email2"){
+            if (emailRegex.test(evt.target.value)) {
+                if(buyer.email!==evt.target.value){
+                    setErr('ERROR en verificación de MAIL')
+                    aux.email2=""
+                    setBuyer(aux)
+                }else{
+                    setErr("")
+                    aux.email2=evt.target.value
+                    setBuyer(aux)
+                }
+            }else{
+                setErr('email invalido')
+                aux.email2=""
+                setBuyer(aux)
+            } 
+        }
+
+        if(evt.target.name==="email"){
+            if (emailRegex.test(evt.target.value)) {
+                if(buyer.email2!==evt.target.value && buyer.email2){
+                    setErr('ERROR en verificación de MAIL')
+                    aux.email=""
+                    setBuyer(aux)
+                }else{
+                    setErr("")
+                    aux.email=evt.target.value
+                    setBuyer(aux)
+                }
+            }else{
+                setErr('email invalido')
+                aux.email=""
+                setBuyer(aux)
+            }
+           
+        }
     }
 
     function onInputPhone(evt){
-        //buyer.phone=evt.target.value
-        const aux={...buyer}
-        aux.phone=evt.target.value
-        //Agregar valicaciones
-        setBuyer(aux)
+        const phonoRegex=/^[0-9]{6,14}$/
+        const aux={...buyer}        
+        if(evt.target.value.match(phonoRegex)) {    
+           aux.phone=evt.target.value
+           setBuyer(aux) 
+           setErr("")
+        }    
+        else {   
+            aux.phone=""
+            setErr("Teléfono inválido")
+            setBuyer(aux)   
+        } 
     }
 
     const [check, setCheck] = useState();
@@ -54,27 +108,20 @@ function Cart(){
         setCheck(true)
     }
 
-
     function remove(itm){
         //Remover un elemento de la lista
-        const position = itemCart.findIndex(i => i.item.id==itm.item.id)
-        console.log('position: ',position)
-        console.log('itemcart:', itemCart)
-        console.log('prop',itm)
-
+        const position = itemCart.findIndex(i => i.item.id===itm.item.id)
         if (position > -1) {
             itemCart.splice(position, 1);
-        }
-        
-        console.log('elimine!')
-        console.log('itemcart:', itemCart)
-        const aux = [...itemCart]
-        setItemCart(aux)
+            const aux = [...itemCart]
+            setItemCart(aux)
+        } 
         
     }
-
- 
-    const [orderId, setOrderId] = useState();
+//-----------------------------
+//  MANEJO DE ORDEN DE COMPRA
+//-----------------------------
+    const [orderId, setOrderId] = useState(0);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
 
@@ -107,8 +154,13 @@ function Cart(){
                 await batch.commit()
             }catch (err){
                 console.log('no se puedo completar la compra, vuelva a intentar más tarde')
+                const aux=[]
+                setItemCart(aux)
             }
-
+        }else{
+            alert('El producto no tiene suficiente stock')
+            const aux=[]
+            setItemCart(aux)
         }
 
         //Genero orden  
@@ -120,16 +172,29 @@ function Cart(){
             date:firebase.firestore.Timestamp.fromDate(new Date())
         }
 
-        console.log('order',order)
-        
+        /* setOrderId(1) */
+
        //pushear la orden con promise
-        /* orders.add(order).then( ({id}) => {
-            setOrderId(id);
+        
+        orders.add(order).then( ({id}) => {
+            console.log('entre al add')
+            
+            //Acá se debería mostrar la orden generada
+            alert('Se genero la orden: '+id+' recibirá un mail con las indicaciones en las próximas horas') 
+            setOrderId(id)
+            
+            //Una vez generada la orden borrar todos los productos que se agregaron al carrito
+            const aux=[]
+            setItemCart(aux)
+
         }).catch(err => {
             setError(err)
-        }).finally(()=>{
+        }).finally(()=>{ 
             setLoading(false)
-        }) */
+        })
+
+        console.log('orderId',orderId)
+
 
         //pushear la orden con await y catch
         /* try{
@@ -141,8 +206,8 @@ function Cart(){
     }
 
     return(
-
-        itemCart.length==0 ?  <Componente1/> : 
+        
+        itemCart.length==0 ? <Componente1/> : 
         <div className="container"> 
             <h2 className="mt-3 text-center">Finalizar Compra</h2>
 
@@ -169,33 +234,56 @@ function Cart(){
 
             {check ?<>
                 <div className="row align-items-start justify-content-around">
-                    <div className="col-lg-5">              
+                    <div className="col-lg-7">              
                         <form className="form-horizontal" method="">
                             <fieldset>
                                 <div className="form-group form-row">
                                     <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-user bigicon"></i></span>
                                     <div className="col-lg-10">
-                                        <input id="fname" name="name" onInput={onInputName} type="text" placeholder="Nombre y Apellido" className="form-control" required />
+                                        <input id="fname" name="name" onInput={onInputName} type="text" placeholder="Nombre y Apellido" className="form-control" required />{!buyer.name ? err : <></>}
                                     </div>
                                 </div>
                         
                                 <div className="form-group form-row">
                                     <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-envelope-o bigicon"></i></span>
-                                    <div className="col-lg-10">
-                                        <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>
+                                    <div className="col-lg-5">
+                                        <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>{!buyer.email && buyer.name ? err : <></>}
+                                    </div>
+                                    <div className="col-lg-5">    
+                                        <input id="email2" name="email2" onInput={onInputMail} type="text" placeholder="Repetir email" className="form-control" required/>{/* !validacion &&*/ !buyer.email || (buyer.email!==buyer.email2) ? err : <></>}
                                     </div>
                                 </div>
                                 <div className="form-group form-row">
                                     <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-phone-square bigicon"></i></span>
                                     <div className="col-lg-10">
-                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>
+                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{!buyer.phone && buyer.email && buyer.name /* && validacion */ ? err : <></>}
                                     </div>
                                 </div>
                             
                                 <div className="col-lg-11 col-12 ml-lg-3 ml-0">
-                                    <button disabled={ !buyer.email || !buyer.name || !buyer.phone} onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg">Finalizar</button>
+                                    <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg" data-toggle="modal" data-target="#exampleModal">Finalizar</button>
                                 </div>
-                                
+
+                                {/* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Se generó su orden!</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Nos comunicaremos con vos para coordinar el envío</p>
+                                                <p>Numero de orden: {orderId}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> */}
+
                             </fieldset>
                         </form>
                     </div>
