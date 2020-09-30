@@ -104,8 +104,13 @@ function Cart(){
     }
 
     const [check, setCheck] = useState();
-    function despachar(check){
-        setCheck(true)
+    function despachar(){
+        if (check){
+            setCheck(false)
+        }else{
+            setCheck(true)
+        }
+
     }
 
     function remove(itm){
@@ -218,7 +223,7 @@ function Cart(){
                             <td className="text-center">{i.item.title}</td>
                             <td className="text-center">${i.item.price} c/u</td>
                             <td className="text-center">{i.cantidad} unidades</td>
-                            <td className="text-right"><button type="button" className="btn btn-primary w-50" onClick={()=>remove(i)}>Quitar</button></td>
+                            <td className="text-right"><button type="button" className="btn btn-primary w-md-50" onClick={()=>remove(i)}>Quitar</button></td>
                         </tr>)}
                     </tbody>
                 </table>
@@ -228,7 +233,7 @@ function Cart(){
             </div>
             <div className="row mb-3 align-items-start justify-content-around">
                 <div className="col-7 text-center">
-                    <button disabled={check===true} type="button" className=" btn btn-primary" onClick={despachar}>Despachar</button>
+                    <button /* disabled={check===true} */ type="button" className=" btn btn-primary" onClick={despachar}>Despachar</button>
                 </div>         
             </div>
 
@@ -249,7 +254,7 @@ function Cart(){
                                     <div className="col-lg-5">
                                         <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>{!buyer.email && buyer.name ? err : <></>}
                                     </div>
-                                    <div className="col-lg-5">    
+                                    <div className="col-lg-5 mt-3 mt-lg-0">    
                                         <input id="email2" name="email2" onInput={onInputMail} type="text" placeholder="Repetir email" className="form-control" required/>{/* !validacion &&*/ !buyer.email || (buyer.email!==buyer.email2) ? err : <></>}
                                     </div>
                                 </div>
@@ -260,8 +265,8 @@ function Cart(){
                                     </div>
                                 </div>
                             
-                                <div className="col-lg-11 col-12 ml-lg-3 ml-0">
-                                    <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg" data-toggle="modal" data-target="#exampleModal">Finalizar</button>
+                                <div className="col-lg-11 col-12 ml-lg-4 ml-0">
+                                    <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg" /* data-toggle="modal" data-target="#exampleModal" */>Finalizar</button>
                                 </div>
 
                                 {/* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -68,19 +68,19 @@ function ProductContainer(){
             <div id="carouselExampleControls" className=" text-center carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
-                        <img src={img1} className="slade" alt="..."/>
-                        {/* <ProductList title="SALE" products={saleProducts}/>
-                        { loading && <p>Loading...</p>} */} 
+                        {/* <img src={img1} className="slade" alt="..."/> */}
+                        <ProductList title="SALE" products={saleProducts}/>
+                        { loading && <p>Loading...</p>} 
                     </div>
                     <div className="carousel-item">
-                        {/* <ProductList title="SUMMER" products={summerProducts}/>
-                        { loading && <p>Loading...</p>} */}
-                        <img src={img2} className="slade" alt="..."/>
+                        <ProductList title="SUMMER" products={summerProducts}/>
+                        { loading && <p>Loading...</p>}
+                        {/* <img src={img2} className="slade" alt="..."/> */}
                     </div>
                     <div className="carousel-item">
-                        {/* <ProductList title="WINTER" products={winterProducts}/>
-                        { loading && <p>Loading...</p>} */}
-                        <img src={img3} className="slade" alt="..."/>
+                        <ProductList title="WINTER" products={winterProducts}/>
+                        { loading && <p>Loading...</p>}
+                        {/* <img src={img3} className="slade" alt="..."/> */}
                     </div>
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -97,7 +97,4 @@ function ProductContainer(){
 }
 
 export default ProductContainer;
- {/*<section className="">
-        <ProductList title={title} products={products}/>
-        { loading && <p>Loading...</p>}
-    </section */}
+ 

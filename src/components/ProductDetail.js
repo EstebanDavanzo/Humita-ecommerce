@@ -61,7 +61,7 @@ function ProductDetail(){
                     <img className="w-75" src={`/imagenes/${product.imageId}`} alt="" />
                     <p className="w-100 mt-1">{product.detalle}</p>
                 </div>
-                <div className="col-lg-3 text-center mt-lg-5">
+                <div className="col-lg-3 text-center mt-md-5">
                     <h3>{product.title}</h3>
                     <h4>${product.price}</h4>
                     <p>{product.description}</p>

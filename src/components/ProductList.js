@@ -9,7 +9,7 @@ import Product from './Product.js';
             </h2>
 
             <ul className="row justify-content-around mt-4 mb-1 mr-4">
-              {products.map((p) => <li className="col-md-3 shadow my-3 mx-1" key={p.id}> 
+              {products.map((p) => <li className="col-lg-3 shadow my-3 mx-1" key={p.id}> 
                 <Product product={p}/>
               </li>)} 
             </ul>
