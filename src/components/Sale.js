@@ -1,5 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import ProductList from './ProductList';
+import { Link } from 'react-router-dom';
 
 import img1 from '../imagenes/slide/slide1.jpg'
 import img2 from '../imagenes/slide/slide2.jpg' 
@@ -67,20 +68,22 @@ function ProductContainer(){
         <>
             <div id="carouselExampleControls" className=" text-center carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
+                   {/* <div className="carousel-item active">
+                        <img src={img1} className="slade" alt="..."/>
+                    </div> */}
                     <div className="carousel-item active">
-                        {/* <img src={img1} className="slade" alt="..."/> */}
-                        <ProductList title="SALE" products={saleProducts}/>
-                        { loading && <p>Loading...</p>} 
+                        {/* <ProductList title="SUMMER" products={summerProducts}/>
+                        { loading && <p>Loading...</p>} */}
+                      <Link to={`/ProductContainer/invierno`}>
+                        <img src={img1} className="slade" alt="..."/>
+                      </Link>
                     </div>
                     <div className="carousel-item">
-                        <ProductList title="SUMMER" products={summerProducts}/>
-                        { loading && <p>Loading...</p>}
-                        {/* <img src={img2} className="slade" alt="..."/> */}
-                    </div>
-                    <div className="carousel-item">
-                        <ProductList title="WINTER" products={winterProducts}/>
-                        { loading && <p>Loading...</p>}
-                        {/* <img src={img3} className="slade" alt="..."/> */}
+                      <Link to={`/ProductContainer/verano`}>
+                        {/* <ProductList title="WINTER" products={winterProducts}/>
+                        { loading && <p>Loading...</p>} */}
+                        <img src={img3} className="slade" alt="..."/>
+                      </Link>
                     </div>
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
