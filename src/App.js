@@ -28,11 +28,9 @@ function App() {
  
     <BrowserRouter>
       <cartContext.Provider value={{itemCart, setItemCart}}>
-      {/* <CartProvider> */} 
 
         <Header btnFb={btnFb} btnInsta={btnInsta}/> 
         <div className="contenedor overflow-auto">
-          {/* <div className="container"> */}
             <Switch>
               <Route exact path="/">
                 <Home/>
@@ -57,11 +55,9 @@ function App() {
               </Route>             
             </Switch>
             <Footer btnFb={btnFb} btnInsta={btnInsta}/>
-          {/* </div> */}
         </div> 
 
       </cartContext.Provider>
-      {/* </CartProvider> */} 
       
     </BrowserRouter>
          

@@ -4,29 +4,22 @@ import { Link } from 'react-router-dom';
 
 import img1 from '../imagenes/slide/slide1.jpg'
 import img2 from '../imagenes/slide/slide2.jpg' 
-/* import img2 from '../imagenes/item1/Cuello_cielo2.jpg' */ 
 import img3 from '../imagenes/slide/slide3.jpg'
 
 import {getFirestore}  from '../firebase/index'
  
 function ProductContainer(){   
-    //const {category} = useParams()
-    
-    /* const title='SALE' */
 
     const [saleProducts, setSaleProducts] = useState([]);
     const [summerProducts, setSummerProducts] = useState([]);
     const [winterProducts, setWinterProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // useEffect con [] --> se ejecuta solo una vez
     useEffect(() => {
       const db = getFirestore();    
       const saleItemCollection = db.collection('items').where('sale','==',true)
       const summerItemCollection = db.collection('items').where('categoryId','==',"verano")
       const winterItemCollection = db.collection('items').where('categoryId','==',"invierno")
-
-     /*  const priceItems = itemCollection.where('price', '>', 300)  /*filtra por un campo*/
       
       saleItemCollection.get().then((querySnapshot) => {
         if(!querySnapshot===0){
@@ -61,27 +54,19 @@ function ProductContainer(){
       }).finally(()=>{
         setLoading(false)
       })
-
     }, []);
 
     return(
         <>
             <div id="carouselExampleControls" className=" text-center carousel slide" data-ride="carousel">
                 <div className="carousel-inner">
-                   {/* <div className="carousel-item active">
-                        <img src={img1} className="slade" alt="..."/>
-                    </div> */}
                     <div className="carousel-item active">
-                        {/* <ProductList title="SUMMER" products={summerProducts}/>
-                        { loading && <p>Loading...</p>} */}
                       <Link to={`/ProductContainer/invierno`}>
                         <img src={img1} className="slade" alt="..."/>
                       </Link>
                     </div>
                     <div className="carousel-item">
                       <Link to={`/ProductContainer/verano`}>
-                        {/* <ProductList title="WINTER" products={winterProducts}/>
-                        { loading && <p>Loading...</p>} */}
                         <img src={img3} className="slade" alt="..."/>
                       </Link>
                     </div>

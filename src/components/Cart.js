@@ -8,8 +8,6 @@ import 'firebase/firestore';
 
 import { cartContext } from './CartContext.js'
 
-/* import {useCartContext} from './CartContext.js' */
-
 function Componente1(){
     return<>
         <div className=" container col-md my-5 align-items-center text-center justify-content-around">
@@ -133,12 +131,11 @@ function Cart(){
     async function buyItems(itemCart){
         
         const db = getFirestore();   
-        
-        //Consulto stock
+    
         const itemsToUpdate = db.collection('items')
                 .where(firebase.firestore.FieldPath.documentId(),'in', itemCart.map(i => i.item.id))
 
-        const query = await itemsToUpdate.get(); //El await es porque devuelve una promise
+        const query = await itemsToUpdate.get(); 
         const batch = db.batch()
 
         const outOfStock=[]
@@ -146,7 +143,7 @@ function Cart(){
         query.docs.forEach((docSnapshot, idx) => {
             if(docSnapshot.data().stock >= itemCart[idx].cantidad) {
                 console.log('hay stock')
-                //actualizo la cantidad de stock en la base de datos
+                
                 batch.update(docSnapshot.ref, {stock:docSnapshot.data().stock - itemCart[idx].cantidad} )
             }else{
                 console.log ('no hay stock')
@@ -167,8 +164,7 @@ function Cart(){
             const aux=[]
             setItemCart(aux)
         }
-
-        //Genero orden  
+         
         const orders = db.collection('orders')
         const order ={
             buyer:buyer,
@@ -176,19 +172,13 @@ function Cart(){
             total:itemCart.reduce((prev,next)=>prev + next.cantidad*next.item.price,0),
             date:firebase.firestore.Timestamp.fromDate(new Date())
         }
-
-        /* setOrderId(1) */
-
-       //pushear la orden con promise
         
         orders.add(order).then( ({id}) => {
             console.log('entre al add')
-            
-            //Acá se debería mostrar la orden generada
+
             alert('Se genero la orden: '+id+' recibirá un mail con las indicaciones en las próximas horas') 
             setOrderId(id)
-            
-            //Una vez generada la orden borrar todos los productos que se agregaron al carrito
+       
             const aux=[]
             setItemCart(aux)
 
@@ -199,15 +189,6 @@ function Cart(){
         })
 
         console.log('orderId',orderId)
-
-
-        //pushear la orden con await y catch
-        /* try{
-            const {id} = await order.add(order)
-        }catch(err){
-            console.log('error al generar la')
-        } */
-
     }
 
     return(
@@ -233,7 +214,7 @@ function Cart(){
             </div>
             <div className="row mb-3 align-items-start justify-content-around">
                 <div className="col-7 text-center">
-                    <button /* disabled={check===true} */ type="button" className=" btn btn-primary" onClick={despachar}>Despachar</button>
+                    <button  type="button" className=" btn btn-primary" onClick={despachar}>Despachar</button>
                 </div>         
             </div>
 
@@ -268,26 +249,6 @@ function Cart(){
                                 <div className="col-lg-11 col-12 ml-lg-4 ml-0">
                                     <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg" /* data-toggle="modal" data-target="#exampleModal" */>Finalizar</button>
                                 </div>
-
-                                {/* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Se generó su orden!</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Nos comunicaremos con vos para coordinar el envío</p>
-                                                <p>Numero de orden: {orderId}</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
 
                             </fieldset>
                         </form>

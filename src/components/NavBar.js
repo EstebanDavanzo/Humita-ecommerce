@@ -40,7 +40,6 @@ function NavBar({btnFb, btnInsta, logo}) {
                             <div className="dropdown-menu text-center" aria-labelledby="navbarDropdown">
                                 <Link to={`/ProductContainer/verano`}><div className="dropdown-item" style={{cursor:'pointer'}}>VERANO 2020</div> </Link>
                                 <Link to={`/ProductContainer/invierno`}><div className="dropdown-item" style={{cursor:'pointer'}}>INVIERNO 2020</div> </Link>
-                                {/* <a className="dropdown-item" href="#">TEJIDOS</a> */}
                             </div>
                         </li>                    
                         <li className="nav-item">

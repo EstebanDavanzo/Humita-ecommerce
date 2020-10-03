@@ -8,20 +8,16 @@ import {cartContext} from './CartContext.js'
 
 
 function ProductDetail(){
-    const {id} = useParams()
-   
+    const {id} = useParams() 
     const [cantItems, setItems] = useState(1)
-
     const {itemCart, setItemCart} = useContext(cartContext)
-    /* const {itemCart, setItemCart} = useCartContext(); */
-
     const [product, setProduct] = useState([]);
    
     useEffect(() => {
         const db = getFirestore(); 
         
         const itemCollection = db.collection('items')
-        const item = itemCollection.doc(id)  /*filtra por id*/
+        const item = itemCollection.doc(id)  
 
         item.get().then((querySnapshot) => {
           if(!querySnapshot===0){
@@ -37,7 +33,6 @@ function ProductDetail(){
         const position = itemCart.findIndex(i => i.item.id==id)
 
         if(position>=0){
-            /* itemCart[position].cantidad+=cantItems */
             const aux = [...itemCart]
             aux[position].cantidad+=cantItems
             setItemCart(aux)

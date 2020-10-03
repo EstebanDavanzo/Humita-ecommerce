@@ -2,10 +2,8 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import {cartContext} from './CartContext.js'
-/* import {useCartContext} from './CartContext.js' */
 
 import cartImg from '../imagenes/cart icon.png';
-/* import Cart from './Cart.js'; */
 
 function CartIcon({claseCart}){
     
