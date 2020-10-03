@@ -37,11 +37,11 @@ nav{
     height: 80vh;
 }
 
+/*slade*/
 .slade{
-    height:40vh;
-    width:100%;    
+    height:80vh;
+    width:70%;    
 }
-
 
 .btn-ham{
     border-color:#A4217D !important;
@@ -223,10 +223,18 @@ nav{
     .cart2{
         display: block;
     }
+
 }
 
 @media(min-width: 768px) {
     .float {
         display: none;
+    }
+}
+
+@media(max-width:768px){
+    .slade {
+       height:50vh;
+       width:100%;   
     }
 }

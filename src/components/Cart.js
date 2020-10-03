@@ -29,9 +29,10 @@ function Cart(){
 //---------------------------------- 
     function onInputName(evt){
         const aux={...buyer}
+        const nameRegex3=/^(?!.* $)[A-Z][a-z]+$/
         const nameRegex2=/^[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]{3,}$/
-        const nameRegex=/^[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+(?:\s+[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+)+$/ 
-        if(evt.target.value.match(nameRegex) || evt.target.value.trim().match(nameRegex2)) {    
+        const nameRegex=/^(?!.* $)[A-Z]+$/ 
+        if(evt.target.value.match(nameRegex) || evt.target.value.trim().match(nameRegex2) || evt.target.value.trim().match(nameRegex3)){  
             aux.name=evt.target.value
             setBuyer(aux)
             setErr("") 
@@ -236,13 +237,13 @@ function Cart(){
                                         <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>{!buyer.email && buyer.name ? err : <></>}
                                     </div>
                                     <div className="col-lg-5 mt-3 mt-lg-0">    
-                                        <input id="email2" name="email2" onInput={onInputMail} type="text" placeholder="Repetir email" className="form-control" required/>{/* !validacion &&*/ !buyer.email || (buyer.email!==buyer.email2) ? err : <></>}
+                                        <input id="email2" name="email2" onInput={onInputMail} type="text" placeholder="Repetir email" className="form-control" required/>{/* !validacion &&*/ (!buyer.email && buyer.name) || (buyer.email!==buyer.email2 && buyer.name) ? err : <></>}
                                     </div>
                                 </div>
                                 <div className="form-group form-row">
                                     <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-phone-square bigicon"></i></span>
                                     <div className="col-lg-10">
-                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{!buyer.phone && buyer.email && buyer.name /* && validacion */ ? err : <></>}
+                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{!buyer.phone && buyer.email && buyer.email2 && buyer.name /* && validacion */ ? err : <></>}
                                     </div>
                                 </div>
                             

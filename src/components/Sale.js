@@ -58,7 +58,7 @@ function ProductContainer(){
 
     return(
         <>
-            <div id="carouselExampleControls" className=" text-center carousel slide" data-ride="carousel">
+            <div id="carouselExampleControls" className=" text-center carousel" data-ride="carousel">
                 <div className="carousel-inner">
                     <div className="carousel-item active">
                       <Link to={`/ProductContainer/invierno`}>
