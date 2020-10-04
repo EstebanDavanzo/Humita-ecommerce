@@ -175,13 +175,10 @@ function Cart(){
         }
         
         orders.add(order).then( ({id}) => {
-            console.log('entre al add')
-
-            alert('Se genero la orden: '+id+' recibirá un mail con las indicaciones en las próximas horas') 
+            /* alert('Se genero la orden: '+id+' recibirá un mail con las indicaciones en las próximas horas')  */
             setOrderId(id)
-       
-            const aux=[]
-            setItemCart(aux)
+            /* const aux=[]
+            setItemCart(aux) */
 
         }).catch(err => {
             setError(err)
@@ -191,6 +188,12 @@ function Cart(){
 
         console.log('orderId',orderId)
     }
+
+    function limpiar(){
+        const aux=[]
+        setItemCart(aux)
+    }
+
 
     return(
         
@@ -243,16 +246,22 @@ function Cart(){
                                 <div className="form-group form-row">
                                     <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-phone-square bigicon"></i></span>
                                     <div className="col-lg-10">
-                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{!buyer.phone && buyer.email && buyer.email2 && buyer.name /* && validacion */ ? err : <></>}
+                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{!buyer.phone && buyer.email && buyer.email2 && buyer.name ? err : <></>}
                                     </div>
                                 </div>
                             
                                 <div className="col-lg-11 col-12 ml-lg-4 ml-0">
-                                    <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg" /* data-toggle="modal" data-target="#exampleModal" */>Finalizar</button>
+                                    <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg" >Finalizar</button>
                                 </div>
 
                             </fieldset>
                         </form>
+            
+                        {orderId ? <>
+                            <div className="text-center mt-3">
+                                <legend>Numero de orden generada: {orderId}</legend>
+                            </div>
+                        </>:<></>}
                     </div>
                 </div> 
             </> : <>
