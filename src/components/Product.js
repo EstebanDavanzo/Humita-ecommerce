@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
 
 function Product({ product }) {
@@ -7,7 +8,7 @@ function Product({ product }) {
             <div style={{cursor:'pointer'}}>
                 <Link to={`/product/${product.id}`}>
                     <img className="w-100 my-3" src={`/imagenes/${product.imageId}`} alt="" />
-                    <h3>{product.title}</h3>
+                    <h3 className="text-primary">{product.title}</h3>
                 </Link>
             </div> 
             <p>
@@ -19,6 +20,10 @@ function Product({ product }) {
                     
         </div>  
     )
+  }
+
+  Product.PropType = {
+    product: PropTypes.object.isRequired
   }
 
 export default Product;

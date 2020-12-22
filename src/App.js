@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 
 import './components/estilos.css';
+import 'bootstrap/dist/css/bootstrap.css';
+/* import $ from 'jquery'; */
+/* import Popper from 'popper.js'; */
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import {cartContext} from './components/CartContext.js'
 /* import {useCartContext,CartProvider} from './components/CartContext.js' */
@@ -29,10 +33,9 @@ function App() {
     <BrowserRouter>
       <cartContext.Provider value={{itemCart, setItemCart}}>
       {/* <CartProvider> */} 
-
         <Header btnFb={btnFb} btnInsta={btnInsta}/> 
         <div className="contenedor overflow-auto">
-          {/* <div className="container"> */}
+          <div className="overflow-hidden">
             <Switch>
               <Route exact path="/">
                 <Home/>
@@ -56,8 +59,8 @@ function App() {
                 <Nosotros/>
               </Route>             
             </Switch>
-            <Footer btnFb={btnFb} btnInsta={btnInsta}/>
-          {/* </div> */}
+            <Footer  btnFb={btnFb} btnInsta={btnInsta}/>
+          </div>
         </div> 
 
       </cartContext.Provider>

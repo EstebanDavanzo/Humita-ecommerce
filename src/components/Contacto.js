@@ -4,7 +4,7 @@ function Contacto(){
     return(
         <div className="container">
             <div className="row align-items-start mt-3" style={{height:"70px"}}>
-                <legend className="text-center header font-weight-bold">
+                <legend className="text-center header font-weight-bold text-primary">
                     CONTACTO
                 </legend>
             </div>

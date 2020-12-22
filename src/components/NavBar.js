@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faInstagram, faFacebook} from '@fortawesome/free-brands-svg-icons'
 import CartIcon from './CartIcon';
 
 function NavBar({btnFb, btnInsta, logo}) {
     return (
-        <nav className="navbar navbar-light bg-ligh navbar-expand-lg shadow-sm font-weight-bold"> 
+        <nav className=" container-fluid navbar text-primary bg-white bg-ligh navbar-expand-lg shadow-sm font-weight-bold"> 
             <div className="container">
 
                 <CartIcon claseCart={"cart"}/>
@@ -40,7 +41,6 @@ function NavBar({btnFb, btnInsta, logo}) {
                             <div className="dropdown-menu text-center" aria-labelledby="navbarDropdown">
                                 <Link to={`/ProductContainer/verano`}><div className="dropdown-item" style={{cursor:'pointer'}}>VERANO 2020</div> </Link>
                                 <Link to={`/ProductContainer/invierno`}><div className="dropdown-item" style={{cursor:'pointer'}}>INVIERNO 2020</div> </Link>
-                                {/* <a className="dropdown-item" href="#">TEJIDOS</a> */}
                             </div>
                         </li>                    
                         <li className="nav-item">
@@ -57,11 +57,11 @@ function NavBar({btnFb, btnInsta, logo}) {
             <CartIcon claseCart={"cart2"}/>
 
             <div className="mr-5 d-flex redes">
-                <a className="mr-3" href="https://www.instagram.com/humitavestidos/" target="_blank">
-                    <img className="iconI" src={btnInsta} alt="" />
+                <a className="mr-3" href="https://www.instagram.com/humitavestidos/" target="_blank" rel="noopener noreferrer">
+                    <FontAwesomeIcon icon={faInstagram} style={{ height: "25px", width:"25px" }}/>
                 </a>
-                <a className="mr-1 ml-1" href="https://www.facebook.com/humitavestidoss" target="_blank">
-                    <img className="iconF" src={btnFb} alt="" />
+                <a className="mr-1 ml-1" href="https://www.facebook.com/humitavestidoss" target="_blank" rel="noopener noreferrer">
+                    <FontAwesomeIcon icon={faFacebook} style={{ height: "23px", width:"23px" }}/>
                 </a> 
             </div>
         </nav>     

@@ -2,7 +2,7 @@ import React from 'react';
 
 function Nosotros(){
     return(
-        <div className="container text-center mt-4">
+        <div className="container text-center mt-4 text-primary">
            
                <h3>Toda prenda #HUMITA empieza por un flechazo textil 💞 </h3>
                <strong>Acá les vamos a contar un poco más sobre esto👇🏾</strong> 

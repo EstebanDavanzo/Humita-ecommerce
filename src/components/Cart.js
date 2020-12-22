@@ -13,7 +13,7 @@ import { cartContext } from './CartContext.js'
 function Componente1(){
     return<>
         <div className=" container col-md my-5 align-items-center text-center justify-content-around">
-            <h2>NO HAY ELEMENTOS EN EL CARRITO </h2>
+            <h2 className="primary-text">NO HAY ELEMENTOS EN EL CARRITO </h2>
             <Link to={'/'}>
                 <button className="btn btn-primary w-50 btn-lg mt-3" type='button'> Ir a comprar </button>
             </Link>
@@ -25,21 +25,26 @@ function Componente1(){
 function Cart(){
     const {itemCart, setItemCart} = useContext(cartContext)
     const [buyer, setBuyer] = useState({});
-    const [err, setErr] = useState("");
+    const [err, setErr] = useState({});
 //----------------------------------
 //   VALIDACIONES DE LOS INPUTS 
 //---------------------------------- 
     function onInputName(evt){
         const aux={...buyer}
+        const errInp={...err}
+        const nameRegex3=/^(?!.* $)[A-Z][a-z]+$/
         const nameRegex2=/^[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]{3,}$/
-        const nameRegex=/^[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+(?:\s+[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+)+$/ 
-        if(evt.target.value.match(nameRegex) || evt.target.value.trim().match(nameRegex2)) {    
+        const nameRegex=/^(?!.* $)[A-Z]+$/
+        if(evt.target.value.match(nameRegex) || evt.target.value.trim().match(nameRegex2) || evt.target.value.trim().match(nameRegex3)) {    
             aux.name=evt.target.value
             setBuyer(aux)
-            setErr("") 
+            errInp.name=""
+            setErr(errInp) 
          }    
          else {   
-             setErr("Nombre inválido")
+             /* setErr("Nombre inválido") */
+             errInp.name="Nombre inválido"
+             setErr(errInp)
              aux.name=""
              setBuyer(aux)   
          } 
@@ -47,22 +52,24 @@ function Cart(){
 
     function onInputMail(evt){
         const aux={...buyer}
-       
+        const errInp={...err}
         const emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-
         if(evt.target.name==="email2"){
             if (emailRegex.test(evt.target.value)) {
                 if(buyer.email!==evt.target.value){
-                    setErr('ERROR en verificación de MAIL')
+                    errInp.email2="ERROR en verificación de email"
+                    setErr(errInp)
                     aux.email2=""
                     setBuyer(aux)
                 }else{
-                    setErr("")
+                    errInp.email2=""
+                    setErr(errInp)
                     aux.email2=evt.target.value
                     setBuyer(aux)
                 }
             }else{
-                setErr('email invalido')
+                errInp.email2="email inválido"
+                setErr(errInp)
                 aux.email2=""
                 setBuyer(aux)
             } 
@@ -71,16 +78,19 @@ function Cart(){
         if(evt.target.name==="email"){
             if (emailRegex.test(evt.target.value)) {
                 if(buyer.email2!==evt.target.value && buyer.email2){
-                    setErr('ERROR en verificación de MAIL')
+                    errInp.email="ERROR en verificación de MAIL"
+                    setErr(errInp)
                     aux.email=""
                     setBuyer(aux)
                 }else{
-                    setErr("")
+                    errInp.email=""
+                    setErr(errInp)
                     aux.email=evt.target.value
                     setBuyer(aux)
                 }
             }else{
-                setErr('email invalido')
+                errInp.email="emial inválido"
+                setErr(errInp)
                 aux.email=""
                 setBuyer(aux)
             }
@@ -90,15 +100,18 @@ function Cart(){
 
     function onInputPhone(evt){
         const phonoRegex=/^[0-9]{6,14}$/
-        const aux={...buyer}        
-        if(evt.target.value.match(phonoRegex)) {    
-           aux.phone=evt.target.value
-           setBuyer(aux) 
-           setErr("")
+        const aux={...buyer} 
+        const errInp={...err}      
+        if(evt.target.value.match(phonoRegex)) {  
+            errInp.phone=""
+            aux.phone=evt.target.value
+            setBuyer(aux) 
+            setErr(errInp)
         }    
         else {   
             aux.phone=""
-            setErr("Teléfono inválido")
+            errInp.phone="Teléfono inválido"
+            setErr(errInp)
             setBuyer(aux)   
         } 
     }
@@ -145,11 +158,8 @@ function Cart(){
 
         query.docs.forEach((docSnapshot, idx) => {
             if(docSnapshot.data().stock >= itemCart[idx].cantidad) {
-                console.log('hay stock')
-                //actualizo la cantidad de stock en la base de datos
                 batch.update(docSnapshot.ref, {stock:docSnapshot.data().stock - itemCart[idx].cantidad} )
             }else{
-                console.log ('no hay stock')
                 outOfStock.push({...docSnapshot.data(), id:docSnapshot.id})
             }
         })
@@ -158,7 +168,7 @@ function Cart(){
             try{
                 await batch.commit()
             }catch (err){
-                console.log('no se puedo completar la compra, vuelva a intentar más tarde')
+                alert('no se puedo completar la compra, vuelva a intentar más tarde')
                 const aux=[]
                 setItemCart(aux)
             }
@@ -177,29 +187,14 @@ function Cart(){
             date:firebase.firestore.Timestamp.fromDate(new Date())
         }
 
-        /* setOrderId(1) */
-
-       //pushear la orden con promise
-        
+       //pushear la orden con promise   
         orders.add(order).then( ({id}) => {
-            console.log('entre al add')
-            
-            //Acá se debería mostrar la orden generada
-            alert('Se genero la orden: '+id+' recibirá un mail con las indicaciones en las próximas horas') 
             setOrderId(id)
-            
-            //Una vez generada la orden borrar todos los productos que se agregaron al carrito
-            const aux=[]
-            setItemCart(aux)
-
         }).catch(err => {
             setError(err)
         }).finally(()=>{ 
             setLoading(false)
         })
-
-        console.log('orderId',orderId)
-
 
         //pushear la orden con await y catch
         /* try{
@@ -209,10 +204,15 @@ function Cart(){
         } */
 
     }
+    function limpiar(){
+        //Una vez generada la orden borrar todos los productos que se agregaron al carrito
+        const aux=[]
+        setItemCart(aux)
+    }
 
     return(
         
-        itemCart.length==0 ? <Componente1/> : 
+        itemCart.length===0 ? <Componente1/> : 
         <div className="container"> 
             <h2 className="mt-3 text-center">Finalizar Compra</h2>
 
@@ -231,13 +231,13 @@ function Cart(){
             <div className="row align-items-start justify-content-around">
                     <h5 className="col-7 text-right">TOTAL: ${itemCart.reduce((prev,next)=>prev + next.cantidad*next.item.price,0)}</h5>
             </div>
-            <div className="row mb-3 align-items-start justify-content-around">
+            {/* <div className="row mb-3 align-items-start justify-content-around">
                 <div className="col-7 text-center">
-                    <button /* disabled={check===true} */ type="button" className=" btn btn-primary" onClick={despachar}>Despachar</button>
+                    <button type="button" className=" btn btn-primary" onClick={despachar}>Despachar</button>
                 </div>         
-            </div>
+            </div> */}
 
-            {check ?<>
+           {/*  {check ?<> */}
                 <div className="row align-items-start justify-content-around">
                     <div className="col-lg-7">              
                         <form className="form-horizontal" method="">
@@ -245,23 +245,23 @@ function Cart(){
                                 <div className="form-group form-row">
                                     <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-user bigicon"></i></span>
                                     <div className="col-lg-10">
-                                        <input id="fname" name="name" onInput={onInputName} type="text" placeholder="Nombre y Apellido" className="form-control" required />{!buyer.name ? err : <></>}
+                                        <input id="fname" name="name" onInput={onInputName} type="text" placeholder="Nombre y Apellido" className="form-control" required />{err.name ? err.name : <></>}
                                     </div>
                                 </div>
                         
                                 <div className="form-group form-row">
                                     <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-envelope-o bigicon"></i></span>
                                     <div className="col-lg-5">
-                                        <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>{!buyer.email && buyer.name ? err : <></>}
+                                        <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>{err.email ? err.email : <></>}
                                     </div>
                                     <div className="col-lg-5 mt-3 mt-lg-0">    
-                                        <input id="email2" name="email2" onInput={onInputMail} type="text" placeholder="Repetir email" className="form-control" required/>{/* !validacion &&*/ !buyer.email || (buyer.email!==buyer.email2) ? err : <></>}
+                                        <input id="email2" name="email2" onInput={onInputMail} type="text" placeholder="Repetir email" className="form-control" required/>{ err.email2  ? err.email2 : <></>}
                                     </div>
                                 </div>
                                 <div className="form-group form-row">
                                     <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-phone-square bigicon"></i></span>
                                     <div className="col-lg-10">
-                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{!buyer.phone && buyer.email && buyer.name /* && validacion */ ? err : <></>}
+                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{err.phone  ? err.phone : <></>}
                                     </div>
                                 </div>
                             
@@ -269,32 +269,36 @@ function Cart(){
                                     <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg" /* data-toggle="modal" data-target="#exampleModal" */>Finalizar</button>
                                 </div>
 
-                                {/* <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Se generó su orden!</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p>Nos comunicaremos con vos para coordinar el envío</p>
-                                                <p>Numero de orden: {orderId}</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
-
                             </fieldset>
                         </form>
+                        {orderId ? <>
+                            <div className="text-center mt-3">
+                                <button tylegende="button" className="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Ver orden generada</button>
+                            </div>
+
+                            <div className="modal fade show" id="staticBackdrop" data-backdrop="static" data-keyboard="false"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div className="modal-dialog">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title" id="staticBackdropLabel">Numero de orden</h5>
+                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={limpiar}>
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div className="modal-body">
+                                            Copie el código de su orden: {orderId}
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={limpiar}>Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </>:<></>}
                     </div>
                 </div> 
-            </> : <>
-            </>} 
+            {/* </> : <>
+            </>}  */}
 
                      
         </div>

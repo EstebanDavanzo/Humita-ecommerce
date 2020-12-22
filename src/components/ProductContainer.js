@@ -3,14 +3,13 @@ import ProductList from './ProductList';
 
 import { useParams } from 'react-router-dom';
 
-/* import ProductDetail from './ProductDetail'; */
 import {getFirestore}  from '../firebase/index'
  
 function ProductContainer(){   
     const {category} = useParams()
     
     const title='Selección ' + category 
-
+    
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -36,10 +35,11 @@ function ProductContainer(){
     }, [category]);
 
     return(
-        <section className="container">
-            <ProductList title={title} products={products}/>
+        <section>
+            <ProductList className="text-primary" title={title} products={products}/>
             { loading && <p>Loading...</p>} 
         </section>
+       
     );
 }
 
