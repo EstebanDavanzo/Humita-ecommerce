@@ -21,7 +21,7 @@ function ProductContainer(){
           console.log('NO hay productos')
         }
         
-        setProducts(querySnapshot.docs.map(doc => ({...doc.data(), id:doc.id})))
+      setProducts(querySnapshot.docs.map(doc => ({...doc.data(), id:doc.id})))
       }).catch((error)=>{
         console.log('error searching items',error)
       }).finally(()=>{

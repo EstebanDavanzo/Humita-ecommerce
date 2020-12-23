@@ -6,6 +6,6 @@ Abrir el navegador en [http://localhost:3000] (http://localhost:3000)
 
 CamelCase
 
-### Code Styling
-Librerías
+### Librerías
+
 

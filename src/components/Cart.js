@@ -120,8 +120,7 @@ function Cart(){
         
         setLoading(true)
         const db = getFirestore();   
-        
-        //Consulto stock
+    
         const itemsToUpdate = db.collection('items')
                 .where(firebase.firestore.FieldPath.documentId(),'in', itemCart.map(i => i.item.id))
 
@@ -168,6 +167,7 @@ function Cart(){
         } 
 
     }  
+
 
     return(
         

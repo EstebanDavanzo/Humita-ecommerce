@@ -60,7 +60,6 @@ function App() {
         </div> 
 
       </cartContext.Provider>
-      {/* </CartProvider> */} 
       
     </BrowserRouter>
          

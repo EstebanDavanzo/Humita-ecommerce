@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faCartArrowDown} from '@fortawesome/free-solid-svg-icons'
 
 import {cartContext} from './CartContext.js'
-/* import {useCartContext} from './CartContext.js' */
 
 /* import cartImg from '../imagenes/cart icon.png'; */
 /* import Cart from './Cart.js'; */
