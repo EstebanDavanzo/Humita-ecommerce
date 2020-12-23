@@ -52,14 +52,14 @@ function ProductDetail(){
         <div className="container">           
             <div className="row align-items-start justify-content-around mt-3"> 
                 <div className="col-lg-9 text-center"> 
-                    <h2 className="text-center mt-3 text-primary">{product.title}</h2>  
+                    <h2 className="text-center mt-3">{product.title}</h2>  
                     <img className="w-50" src={`/imagenes/${product.imageId}`} alt="" />
                     <p className="w-100 mt-1">{product.detalle}</p>
                 </div>
                 <div className="col-lg-3 text-center mt-md-5">
-                    <h3 className="text-primary">{product.title}</h3>
-                    <h4 className="text-primary">${product.price}</h4>
-                    <p className="text-primary">{product.description}</p>
+                    <h3>{product.title}</h3>
+                    <h4>${product.price}</h4>
+                    <p>{product.description}</p>
                     <ItemCount min={1} max={product.stock} cantItems={cantItems} setItems={setItems}/>
                     <button onClick={()=>addCart({cantItems, id})} type="button" className="w-100 my-2 btn btn-primary">Agregar al carrito</button>
                     {/* <button onClick={()=>buy(cantItems)} type="button" className="w-100 mb-2 btn btn-primary" >Comprar {cantItems}</button> */} 

@@ -6,7 +6,7 @@ import { faEnvelopeOpen } from '@fortawesome/free-regular-svg-icons'
 
 function Footer(){   
     return(
-        <footer className="bg-primary text-white mt-5 py-5">
+        <footer className="mt-5 py-5">
             <div className="row mt-3">
                 <p className="mt-2 col-lg-6 text-center">
                    <FontAwesomeIcon className="text-white" icon={faMapMarkerAlt}/>{" "}

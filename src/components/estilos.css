@@ -1,35 +1,105 @@
-
-#fname:focus, #lname:focus, #email:focus, #phone:focus, #message:focus{
-    border-color:#d425a0;
-    box-shadow:1px 1px 1px 1px #d425a0 ;
+*{
+    box-sizing: border-box!important;
+    list-style:none!important;
+}
+.text-color{
+    color: #A4217D !important;
 }
 
+footer {
+    background-color: #A4217D!important;
+    color:white !important;
+}
+
+body{
+    background-color: #f8f9fa !important;
+    color: #A4217D !important;
+} 
+a{
+    color: #861a66!important;
+}
+
+
+a:hover{
+    text-decoration:none!important;
+    color: #d425a0!important;
+}
+
+#fname:focus, #lname:focus, #email:focus, #phone:focus, #message:focus{
+    border-color:#d425a0 !important;
+    box-shadow:1px 1px 1px 1px #d425a0 !important;
+}
+
+/* p{
+    color:black ;
+} */
+
+nav{
+    background-color:white ;
+}
+.nav-link{
+   color:#A4217D !important;
+}
 
 .contenedor{
     height: 80vh;
 }
 
+/*slade*/
+/* .slade{
+    height:80vh;
+    width:70%;    
+} */
+
 .btn-ham{
     border-color:#A4217D !important;
-
 }
 
-.dropdown-item:active{
-    background-color: #A4217D!important;
-    color: white;
+.navbar-toggler-icon{
+    color:#A4217D !important;
 }
-
-.btn-primary:active{
-    background-color:#A4217D;
-    color:lightgray!important;
-    box-shadow:none !important;
-}
-
+ 
 
 .redes {
     top: 35px;
 }
 
+.icon {
+    width: 22px;
+   
+}
+ /*
+.redes a{
+    width: 21px;
+    height:21px;
+    background-image: url(/ecommerce-esteban/src/components/imagenes/redes.png);
+    margin-left:2px;
+    padding: 3px; 
+}
+*/
+.iconI {
+/*     background-position: 74px 49px; */
+    height: 23px ;
+    width: 23px;
+}
+
+.iconI:hover{
+/*   background-position: 74px 24px; */  
+    height: 25px;
+    width: 25px;
+}
+
+.iconF {
+/*     background-position: 48px 48px; */
+    height: 23px ;
+    width: 23px;
+}
+
+.iconF:hover {
+/*     background-position: 48px 24px; */
+    height: 25px;
+    width: 25px;
+}
 
 .float {
     position: fixed;
@@ -57,8 +127,111 @@
     color: white;
 }
 
-span.cart2{
-    margin-right:11px;
+.btn-primary {
+    background-color: #f8f9fa!important;
+    border-color: #A4217D!important;
+    color:#A4217D!important;
+    border-radius: 5px;
+}
+
+.btn-block {
+    background-color: lightgrey!important;
+    border-color: #A4217D!important;
+    color:#A4217D!important;
+    width: 100%;
+}
+
+.border-primary {
+    border-color: #A4217D !important;
+}
+.btn:active{
+    border-color:#A4217D !important;
+}
+
+.btn-primary:hover {
+    border-color: lightgrey!important; 
+    color: #f8f9fa!important;
+    background-color: #A4217D!important;
+}
+
+.btn-primary:focus{
+    background-color: #f8f9fa;
+    border-color: #A4217D!important;
+    color:#A4217D!important;
+    box-shadow: 1px 2px 1px #A4217D !important;
+}
+
+.btn-primary:disabled{
+    border-color: lightgrey!important; 
+    color: #A4217D!important;
+    background-color: #f8f9fa!important;
+}
+
+.btn-primary:active{
+    background-color: #A4217D !important ;
+}
+
+.nav-link:hover {
+    background-color: #A4217D !important;
+    color: white !important;
+    border-radius: 4px;
+}
+
+.cart2, .cart{
+    height: 25px;
+    width: 25px;
+}
+
+.cart2:hover{
+    height: 28px;
+    width: 28px;
+}
+
+.dropdown-menu{
+    border-color:#A4217D!important;
+}
+
+.dropdown-item{
+    color: #A4217D !important;
+}
+
+.dropdown-item:hover{
+    background-color: #A4217D !important; 
+    color:white!important;
+}
+
+@media (max-width: 991px) {
+    nav .redes {
+        display: none !important;
+    }
+
+    .cart2{
+        display: none;
+    }
+
+    footer .redes{
+        display:block;
+    }
+
+    .bigicon {
+        display: none !important;
+    }
+}
+
+@media (min-width: 991px) {
+
+    footer .redes{
+        display:none;
+    }
+
+    .cart{
+        display:none;
+    }
+
+    .cart2{
+        display: block;
+    }
+
 }
 
 @media(min-width: 768px) {
@@ -72,4 +245,4 @@ span.cart2{
        height:50vh;
        width:100%;   
     }
-} 
+}

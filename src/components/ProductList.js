@@ -5,7 +5,7 @@ import Product from './Product.js';
  function ProductList({title,products}) {
     return (
         <>
-            <h2 className="text-center mt-4 text-primary">
+            <h2 className="text-center mt-4">
                 {title}
             </h2>
 

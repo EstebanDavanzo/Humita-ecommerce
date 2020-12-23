@@ -32,7 +32,7 @@ function ProductContainer(){
 
     return(
         <section>
-            <ProductList className="text-primary" title={title} products={products}/>
+            <ProductList title={title} products={products}/>
             { loading && <p>Loading...</p>} 
         </section>
        

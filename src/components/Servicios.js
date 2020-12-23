@@ -8,16 +8,16 @@ function Servicios(){
         <div className="container">
             <div className="row text-center mt-5 justify-content-around" >
                 <div className="col-sd-4">
-                    <FontAwesomeIcon icon={faStoreAlt}style={{fontSize:"4em"}} className="text-primary" />
+                    <FontAwesomeIcon icon={faStoreAlt}style={{fontSize:"4em"}}  />
                     <br/>
                     Veni a nuestro <br/>show room
                 </div>
                 <div className="col-sd-4">
-                    <FontAwesomeIcon icon={faShippingFast}style={{fontSize:"4em"}} className="text-primary"/>
+                    <FontAwesomeIcon icon={faShippingFast}style={{fontSize:"4em"}}/>
                     <br/>Envíos a todo<br/> el país
                 </div>
                 <div className="col-sd-4">
-                    <FontAwesomeIcon icon={faCreditCard}style={{fontSize:"4em"}} className="text-primary"/>
+                    <FontAwesomeIcon icon={faCreditCard}style={{fontSize:"4em"}} />
                     <br/>Todos los medios <br/>de pago
                 </div>
             </div>

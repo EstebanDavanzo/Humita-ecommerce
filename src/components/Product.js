@@ -8,7 +8,7 @@ function Product({ product }) {
             <div style={{cursor:'pointer'}}>
                 <Link to={`/product/${product.id}`}>
                     <img className="w-100 my-3" src={`/imagenes/${product.imageId}`} alt="" />
-                    <h3 className="text-primary">{product.title}</h3>
+                    <h3 >{product.title}</h3>
                 </Link>
             </div> 
             <p>

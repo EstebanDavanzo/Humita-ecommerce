@@ -12,7 +12,7 @@ function ItemCount({ min, max, cantItems, setItems}){
     return(
         <div>
                 <button disabled={cantItems<=min} type="button" onClick={removeItems} className="w-25 btn btn-primary"> - </button>
-                <label className="w-50 text-center text-primary">{cantItems}</label>
+                <label className="w-50 text-center ">{cantItems}</label>
                 <button disabled={cantItems>=max} type="button" onClick={addItems} className="w-25 btn btn-primary"> + </button>
         </div>
     );

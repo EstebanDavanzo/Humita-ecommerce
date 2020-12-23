@@ -6,7 +6,7 @@ import Slide from '../components/Slide';
 
 function Home(){   
     return(
-        <main className="bg-secondary">
+        <main >
           <Sale/>
           <Servicios/>
           <Slide/>

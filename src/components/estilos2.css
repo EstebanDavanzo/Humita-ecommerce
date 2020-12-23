@@ -1,0 +1,75 @@
+
+#fname:focus, #lname:focus, #email:focus, #phone:focus, #message:focus{
+    border-color:#d425a0;
+    box-shadow:1px 1px 1px 1px #d425a0 ;
+}
+
+
+.contenedor{
+    height: 80vh;
+}
+
+.btn-ham{
+    border-color:#A4217D !important;
+
+}
+
+.dropdown-item:active{
+    background-color: #A4217D!important;
+    color: white;
+}
+
+.btn-primary:active{
+    background-color:#A4217D;
+    color:lightgray!important;
+    box-shadow:none !important;
+}
+
+
+.redes {
+    top: 35px;
+}
+
+
+.float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    /*bottom: 40px;*/
+    bottom: 80px;
+    /*right: 40px;*/
+    right: 30px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 3px #999;
+    z-index: 100;
+}
+
+.my-float {
+    margin-top: 16px;
+}
+
+.fa-whatsapp,
+.my-float:hover {
+    color: white;
+}
+
+span.cart2{
+    margin-right:11px;
+}
+
+@media(min-width: 768px) {
+    .float {
+        display: none;
+    }
+}
+
+@media(max-width:768px){
+    .slade {
+       height:50vh;
+       width:100%;   
+    }
+} 
