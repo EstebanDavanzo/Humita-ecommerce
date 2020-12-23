@@ -160,14 +160,14 @@ function Cart(){
         }
 
         try{
-            const {id, date} = await orders.add(order)
+            const {id} = await orders.add(order)
             setOrderId(id)
         }catch(err){
             setError(err)
+            console.log(error)
         } 
 
     }  
-
 
     return(
         

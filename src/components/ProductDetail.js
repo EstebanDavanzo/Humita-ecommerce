@@ -44,9 +44,9 @@ function ProductDetail(){
     
     }
 
-    function buy(cantItems){
+    /* function buy(cantItems){
         console.log('Comprar: ' + cantItems + ' articulos');
-    }
+    } */
 
     return(
         <div className="container">           
@@ -62,7 +62,7 @@ function ProductDetail(){
                     <p className="text-primary">{product.description}</p>
                     <ItemCount min={1} max={product.stock} cantItems={cantItems} setItems={setItems}/>
                     <button onClick={()=>addCart({cantItems, id})} type="button" className="w-100 my-2 btn btn-primary">Agregar al carrito</button>
-                    <button onClick={()=>buy(cantItems)} type="button" className="w-100 mb-2 btn btn-primary" >Comprar {cantItems}</button> 
+                    {/* <button onClick={()=>buy(cantItems)} type="button" className="w-100 mb-2 btn btn-primary" >Comprar {cantItems}</button> */} 
                 </div>     
             </div>
         </div>      

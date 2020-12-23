@@ -5,9 +5,6 @@ import {faCartArrowDown} from '@fortawesome/free-solid-svg-icons'
 
 import {cartContext} from './CartContext.js'
 
-/* import cartImg from '../imagenes/cart icon.png'; */
-/* import Cart from './Cart.js'; */
-
 function CartIcon({claseCart}){
     
     const {itemCart} = useContext(cartContext)
