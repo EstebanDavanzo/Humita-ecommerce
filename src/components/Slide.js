@@ -35,7 +35,7 @@ function Slide(){
         <>
           <Slider className="container my-5"{...settings}>
               {products.map((p) => <div className="col-sd-4" key={p.id}> 
-                  <img className="rounded-circle w-100" src={`/imagenes/${p.imageId}`} alt="" />
+                  <img className="rounded-circle w-sd-100 img-fluid" src={`/imagenes/${p.imageId}`} alt="" />
               </div>)}             
           </Slider>
           { loading && <p>Loading...</p>}

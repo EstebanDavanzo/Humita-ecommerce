@@ -3,8 +3,7 @@ import {BrowserRouter, Switch, Route} from 'react-router-dom'
 
 import './components/estilos.css';
 import 'bootstrap/dist/css/bootstrap.css';
-/* import $ from 'jquery'; */
-/* import Popper from 'popper.js'; */
+
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 import {cartContext} from './components/CartContext.js'
@@ -20,9 +19,6 @@ import ProductDetail from './components/ProductDetail';
 import Contacto from './components/Contacto';
 import Nosotros from './components/Nosotros';
 
-import btnInsta from './imagenes/insta.png';
-import btnFb from './imagenes/fb.png'
-
 
 function App() {
 
@@ -33,7 +29,7 @@ function App() {
     <BrowserRouter>
       <cartContext.Provider value={{itemCart, setItemCart}}>
       {/* <CartProvider> */} 
-        <Header btnFb={btnFb} btnInsta={btnInsta}/> 
+        <Header/> 
         <div className="contenedor overflow-auto">
           <div className="overflow-hidden">
             <Switch>
@@ -59,7 +55,7 @@ function App() {
                 <Nosotros/>
               </Route>             
             </Switch>
-            <Footer  btnFb={btnFb} btnInsta={btnInsta}/>
+            <Footer/>
           </div>
         </div> 
 

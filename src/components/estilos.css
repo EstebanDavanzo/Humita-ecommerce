@@ -14,22 +14,11 @@
     height: 80vh;
 }
 
-.slade{
-    height:50vh;
-    width:100%;    
-}
-
 .btn-ham{
     border-color:#A4217D !important;
 
 }
-.navbar-toggler-icon{
-    color:#A4217D !important;
-}
 
-.navbar-toggler-icon{
-    color:white !important;
-}
 .dropdown-item:active{
     background-color: #A4217D!important;
     color: white;
@@ -79,10 +68,6 @@
 span.cart2{
     margin-right:11px;
 }
-
-
-
-
 
 @media(min-width: 768px) {
     .float {

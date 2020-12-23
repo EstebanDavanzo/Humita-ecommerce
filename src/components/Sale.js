@@ -1,14 +1,14 @@
-import React, {useEffect, useState } from 'react';
+import React/* , {useEffect, useState } */ from 'react';
 //import { Link } from 'react-router-dom';
 
 import img1 from '../imagenes/slide/slide 1.png'
 import img2 from '../imagenes/slide/slide 2.png'
 import img3 from '../imagenes/slide/slide 3.png'
 
-import {getFirestore}  from '../firebase/index'
+/* import {getFirestore}  from '../firebase/index' */
  
 function ProductContainer(){   
-    const [saleProducts, setSaleProducts] = useState([]);
+    /* const [saleProducts, setSaleProducts] = useState([]);
     const [summerProducts, setSummerProducts] = useState([]);
     const [winterProducts, setWinterProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -54,25 +54,19 @@ function ProductContainer(){
         setLoading(false)
       })
 
-    }, []);
+    }, []); */
 
     return(
         <>
             <div id="carouselExampleCaptions" className="carousel slide" data-ride="carousel">
               <div className="carousel-inner">
                 <div className="carousel-item active">
-                  <img src={img1} className="d-block slade" alt="..."/>
-                  {/* <div className="carousel-caption d-md-block">
-                    <Link to={`/ProductContainer/verano`}>
-                      <button type="button" className="btn btn-primary-outline btn-lg mb-3 text-white border-light">COMPRAR</button>
-                    </Link>
-                    <legend>¡No te pierdas la selección de verano que tenemos para vos!</legend>
-                  </div> */}
+                  <img src={img1} className="d-block img-fluid" alt="..."/>
                 </div>
                 <div className="carousel-item">
-                  <img src={img2} className="d-block slade" alt="..."/>
+                  <img src={img2} className="d-block img-fluid" alt="..."/>
                 </div><div className="carousel-item">
-                  <img src={img3} className="d-block slade" alt="..."/>
+                  <img src={img3} className="d-block img-fluid" alt="..."/>
                 </div>
 
               </div>

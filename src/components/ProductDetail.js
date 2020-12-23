@@ -31,7 +31,7 @@ function ProductDetail(){
         }).catch((error)=>{
           console.log('error searching items',error)
         })
-      }, []);
+      }, [id]);
 
     function addCart({cantItems , id}){
         const position = itemCart.findIndex(i => i.item.id===id)

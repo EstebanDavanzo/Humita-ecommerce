@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faInstagram, faFacebook} from '@fortawesome/free-brands-svg-icons'
 import CartIcon from './CartIcon';
 
-function NavBar({btnFb, btnInsta, logo}) {
+function NavBar({logo}) {
     return (
         <nav className=" container-fluid navbar text-primary bg-white bg-ligh navbar-expand-lg shadow-sm font-weight-bold"> 
             <div className="container">
@@ -19,7 +19,7 @@ function NavBar({btnFb, btnInsta, logo}) {
 
                 <button className="navbar-toggler btn-ham" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"/>
+                    <span className="navbar-toggler-icon" />
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarNavDropdown" data-toggle="collapse" 
@@ -39,8 +39,9 @@ function NavBar({btnFb, btnInsta, logo}) {
                             </div>
                            
                             <div className="dropdown-menu text-center" aria-labelledby="navbarDropdown">
-                                <Link to={`/ProductContainer/verano`}><div className="dropdown-item" style={{cursor:'pointer'}}>VERANO 2020</div> </Link>
-                                <Link to={`/ProductContainer/invierno`}><div className="dropdown-item" style={{cursor:'pointer'}}>INVIERNO 2020</div> </Link>
+                                <Link to={`/ProductContainer/verano`}><div className="dropdown-item" style={{cursor:'pointer'}}>VERANO</div> </Link>
+                                <Link to={`/ProductContainer/invierno`}><div className="dropdown-item" style={{cursor:'pointer'}}>INVIERNO</div> </Link>
+                                <Link to={`/ProductContainer/accesorios`}><div className="dropdown-item" style={{cursor:'pointer'}}>ACCESORIOS</div> </Link>
                             </div>
                         </li>                    
                         <li className="nav-item">

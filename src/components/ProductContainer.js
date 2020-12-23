@@ -2,7 +2,6 @@ import React, {useEffect, useState } from 'react';
 import ProductList from './ProductList';
 
 import { useParams } from 'react-router-dom';
-
 import {getFirestore}  from '../firebase/index'
  
 function ProductContainer(){   
@@ -13,12 +12,9 @@ function ProductContainer(){
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // useEffect con [] --> se ejecuta solo una vez
     useEffect(() => {
       const db = getFirestore();    
       const itemCollection = db.collection('items').where('categoryId','==',category)
-
-     /*  const priceItems = itemCollection.where('price', '>', 300)  /*filtra por un campo*/
       
       itemCollection.get().then((querySnapshot) => {
         if(!querySnapshot===0){

@@ -2,10 +2,10 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import logo from '../imagenes/logo.jpg';
 
-function Header({btnFb, btnInsta}) {
+function Header() {
     return (
         <header>
-            <NavBar btnFb={btnFb} btnInsta={btnInsta} logo={logo}/>
+            <NavBar logo={logo}/>
         </header>
     );
 }

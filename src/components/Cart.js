@@ -1,26 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import {getFirestore}  from '../firebase/index'
 import * as firebase from 'firebase/app';
 import 'firebase/firestore';
 
-
 import { cartContext } from './CartContext.js'
-
-/* import {useCartContext} from './CartContext.js' */
-
-function Componente1(){
-    return<>
-        <div className=" container col-md my-5 align-items-center text-center justify-content-around">
-            <h2 className="primary-text">NO HAY ELEMENTOS EN EL CARRITO </h2>
-            <Link to={'/'}>
-                <button className="btn btn-primary w-50 btn-lg mt-3" type='button'> Ir a comprar </button>
-            </Link>
-        </div>
-    </>
-}
-
+import { CartEmpty } from './CartEmpty';
 
 function Cart(){
     const {itemCart, setItemCart} = useContext(cartContext)
@@ -94,7 +79,6 @@ function Cart(){
                 aux.email=""
                 setBuyer(aux)
             }
-           
         }
     }
 
@@ -116,16 +100,6 @@ function Cart(){
         } 
     }
 
-    const [check, setCheck] = useState();
-    function despachar(){
-        if (check){
-            setCheck(false)
-        }else{
-            setCheck(true)
-        }
-
-    }
-
     function remove(itm){
         //Remover un elemento de la lista
         const position = itemCart.findIndex(i => i.item.id===itm.item.id)
@@ -133,25 +107,25 @@ function Cart(){
             itemCart.splice(position, 1);
             const aux = [...itemCart]
             setItemCart(aux)
-        } 
-        
+        }    
     }
 //-----------------------------
 //  MANEJO DE ORDEN DE COMPRA
 //-----------------------------
     const [orderId, setOrderId] = useState(0);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState();
 
     async function buyItems(itemCart){
         
+        setLoading(true)
         const db = getFirestore();   
         
         //Consulto stock
         const itemsToUpdate = db.collection('items')
                 .where(firebase.firestore.FieldPath.documentId(),'in', itemCart.map(i => i.item.id))
 
-        const query = await itemsToUpdate.get(); //El await es porque devuelve una promise
+        const query = await itemsToUpdate.get(); 
         const batch = db.batch()
 
         const outOfStock=[]
@@ -169,16 +143,15 @@ function Cart(){
                 await batch.commit()
             }catch (err){
                 alert('no se puedo completar la compra, vuelva a intentar más tarde')
-                const aux=[]
-                setItemCart(aux)
+                setItemCart([])
             }
         }else{
             alert('El producto no tiene suficiente stock')
-            const aux=[]
-            setItemCart(aux)
+            setItemCart([])
         }
 
-        //Genero orden  
+        //Genero orden 
+        
         const orders = db.collection('orders')
         const order ={
             buyer:buyer,
@@ -187,33 +160,19 @@ function Cart(){
             date:firebase.firestore.Timestamp.fromDate(new Date())
         }
 
-       //pushear la orden con promise   
-        orders.add(order).then( ({id}) => {
+        try{
+            const {id, date} = await orders.add(order)
             setOrderId(id)
-        }).catch(err => {
-            setError(err)
-        }).finally(()=>{ 
-            setLoading(false)
-        })
-
-        //pushear la orden con await y catch
-        /* try{
-            const {id} = await order.add(order)
         }catch(err){
-            console.log('error al generar la')
-        } */
+            setError(err)
+        } 
 
-    }
-    function limpiar(){
-        //Una vez generada la orden borrar todos los productos que se agregaron al carrito
-        const aux=[]
-        setItemCart(aux)
-    }
+    }  
 
     return(
         
-        itemCart.length===0 ? <Componente1/> : 
-        <div className="container"> 
+        itemCart.length===0 ? <CartEmpty/> : 
+        <div className="container">
             <h2 className="mt-3 text-center">Finalizar Compra</h2>
 
             <div className="row align-items-start justify-content-around">
@@ -223,7 +182,7 @@ function Cart(){
                             <td className="text-center">{i.item.title}</td>
                             <td className="text-center">${i.item.price} c/u</td>
                             <td className="text-center">{i.cantidad} unidades</td>
-                            <td className="text-right"><button type="button" className="btn btn-primary w-md-50" onClick={()=>remove(i)}>Quitar</button></td>
+                            <td className="text-right"><button type="button" className="btn btn-primary w-md-50" onClick={()=>remove(i)} >Quitar</button></td>
                         </tr>)}
                     </tbody>
                 </table>
@@ -231,76 +190,67 @@ function Cart(){
             <div className="row align-items-start justify-content-around">
                     <h5 className="col-7 text-right">TOTAL: ${itemCart.reduce((prev,next)=>prev + next.cantidad*next.item.price,0)}</h5>
             </div>
-            {/* <div className="row mb-3 align-items-start justify-content-around">
-                <div className="col-7 text-center">
-                    <button type="button" className=" btn btn-primary" onClick={despachar}>Despachar</button>
-                </div>         
-            </div> */}
-
-           {/*  {check ?<> */}
-                <div className="row align-items-start justify-content-around">
-                    <div className="col-lg-7">              
-                        <form className="form-horizontal" method="">
-                            <fieldset>
-                                <div className="form-group form-row">
-                                    <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-user bigicon"></i></span>
-                                    <div className="col-lg-10">
-                                        <input id="fname" name="name" onInput={onInputName} type="text" placeholder="Nombre y Apellido" className="form-control" required />{err.name ? err.name : <></>}
-                                    </div>
+            
+            <div className="row align-items-start justify-content-around">
+                <div className="col-lg-7">              
+                    <form className="form-horizontal" method="">
+                        <fieldset>
+                            <div className="form-group form-row">
+                                <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-user bigicon"></i></span>
+                                <div className="col-lg-10">
+                                    <input id="fname" name="name" onInput={onInputName} type="text" placeholder="Nombre y Apellido" className="form-control" required />{err.name ? err.name : <></>}
                                 </div>
+                            </div>
+                    
+                            <div className="form-group form-row">
+                                <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-envelope-o bigicon"></i></span>
+                                <div className="col-lg-5">
+                                    <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>{err.email ? err.email : <></>}
+                                </div>
+                                <div className="col-lg-5 mt-3 mt-lg-0">    
+                                    <input id="email2" name="email2" onInput={onInputMail} type="text" placeholder="Repetir email" className="form-control" required/>{ err.email2  ? err.email2 : <></>}
+                                </div>
+                            </div>
+                            <div className="form-group form-row">
+                                <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-phone-square bigicon"></i></span>
+                                <div className="col-lg-10">
+                                    <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{err.phone  ? err.phone : <></>}
+                                </div>
+                            </div>
                         
-                                <div className="form-group form-row">
-                                    <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-envelope-o bigicon"></i></span>
-                                    <div className="col-lg-5">
-                                        <input id="email" name="email" onInput={onInputMail} type="text" placeholder="Email" className="form-control" required/>{err.email ? err.email : <></>}
-                                    </div>
-                                    <div className="col-lg-5 mt-3 mt-lg-0">    
-                                        <input id="email2" name="email2" onInput={onInputMail} type="text" placeholder="Repetir email" className="form-control" required/>{ err.email2  ? err.email2 : <></>}
-                                    </div>
-                                </div>
-                                <div className="form-group form-row">
-                                    <span className="col-lg-1 col-lg-offset-2 text-center"><i className="fa fa-phone-square bigicon"></i></span>
-                                    <div className="col-lg-10">
-                                        <input id="phone" name="phone" onInput={onInputPhone} type="text" placeholder="Teléfono" className="form-control"/>{err.phone  ? err.phone : <></>}
-                                    </div>
-                                </div>
-                            
-                                <div className="col-lg-11 col-12 ml-lg-4 ml-0">
-                                    <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)} type="button" className="btn btn-primary w-100 btn-lg" /* data-toggle="modal" data-target="#exampleModal" */>Finalizar</button>
-                                </div>
-
-                            </fieldset>
-                        </form>
-                        {orderId ? <>
-                            <div className="text-center mt-3">
-                                <button tylegende="button" className="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Ver orden generada</button>
+                            <div className="col-lg-11 col-12 ml-lg-4 ml-0">
+                                <button disabled={ !buyer.name || !buyer.email || !buyer.phone || !buyer.email2 } onClick={()=>buyItems(itemCart)}   type="button" className="btn btn-primary w-100 btn-lg" /* data-toggle="modal" data-target="#exampleModal" */>Finalizar</button>
                             </div>
 
-                            <div className="modal fade show" id="staticBackdrop" data-backdrop="static" data-keyboard="false"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div className="modal-dialog">
-                                    <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5 className="modal-title" id="staticBackdropLabel">Numero de orden</h5>
-                                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={limpiar}>
-                                            <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div className="modal-body">
-                                            Copie el código de su orden: {orderId}
-                                        </div>
-                                        <div className="modal-footer">
-                                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={limpiar}>Cerrar</button>
-                                        </div>
+                        </fieldset>
+                    </form>
+                    { orderId  ? <>
+                        <div className="text-center mt-3">
+                            <button tylegende="button" className="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">Ver orden generada</button>
+                        </div>
+
+                        <div className="modal fade show" id="staticBackdrop" data-backdrop="static" data-keyboard="false"  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div className="modal-dialog">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title" id="staticBackdropLabel">Numero de orden</h5>
+                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>setItemCart([])}>
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        Copie el código de su orden: {orderId}
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={()=>setItemCart([])}>Cerrar</button>
                                     </div>
                                 </div>
                             </div>
-                        </>:<></>}
-                    </div>
-                </div> 
-            {/* </> : <>
-            </>}  */}
-
-                     
+                        </div>
+                    </>:<>{ loading && <p className="text-center">Generando código de pedido...</p>}</>}
+                </div>
+            </div> 
+             
         </div>
     )
 }
